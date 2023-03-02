@@ -6,7 +6,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### For example:
 
-### ![alt text]([image_url](https://github.com/LeoUtas/fishingvizr/blob/main/example/dataframe.jpg?raw=true))
+### ![text]([[image_url](https://github.com/LeoUtas/fishingvizr/blob/main/example/dataframe.jpg?raw=true)])
  
 
 
