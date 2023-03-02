@@ -19,6 +19,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 
 
+
 ## User guide
 
 
