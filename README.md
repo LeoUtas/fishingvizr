@@ -26,7 +26,31 @@ This R package can be used to request spatiotemporal fishing effort information 
 #### The first step is determining the fishing area/s. If the determined area/s is within the Northwest Atlantic (FAO Major Fishing Area 21), please see option 1; otherwise, please refer to option 2 below.
 
 #### Option 1:
+#### Due to the availability of geographic data for fishing areas within the Northwest Atlantic, it only requires two functions (i.e., get_rasters() and make_bubmap()) for generating fishing effort data and map visualization.
 
+#### get_rasters() requires the user to enter values for the following arguments, 
+#### spatial_resolution takes either "daily"
+
+| Name | Age | Occupation |
+| :---: | :---: | --- |
+| John Doe | 25 | Developer |
+| Jane Smith | 30 | Designer |
+| Mike Johnson | 45 | Manager |
+
+
+
+
+
+
+, temporal_resolution,
+  group_by = "vessel_id",
+  begin,
+  end,
+  selected_region,
+  gear_type = "all",
+  region_source = "user_json",
+  key
+))
 
 
 
