@@ -1,0 +1,10 @@
+Package: fishingvizr
+Type: Package
+Title: An R package for spatial fishing effort visualization
+Version: 0.1.0
+Author: HoangNg
+Maintainer: The package maintainer <hnguyenthe@mun.ca>
+Description: This R package can be used to request spatiotemporal fishing effort information from the Global Fishing Watch API and generate map plots for data visualization.
+License: None
+Encoding: UTF-8
+LazyData: true

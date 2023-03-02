@@ -1,0 +1,23 @@
+exportPattern("^[[:alpha:]]+")
+
+importFrom(sf, "read_sf", "st_coordinates")
+importFrom(dplyr, "group_by", "reframe", "n", "select")
+importFrom(gfwr, "get_raster")
+importFrom(jsonlite, "toJSON")
+importFrom(magrittr,"%>%")
+importFrom(ggplot2,
+           "ggplot",
+           "geom_sf",
+           "geom_point",
+           "aes",
+           "scale_shape_manual",
+           "scale_size_continuous",
+           "labs",
+           "ggsave",
+           "element_text",
+           "element_blank",
+           "element_line",
+           "element_rect",
+           "theme"
+
+           )
