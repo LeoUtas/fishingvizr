@@ -73,7 +73,8 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 
 ## Bug report & collaboration 
-
+#### For reporting bugs, please email hnguyenthe@mun.ca
+#### For collaborating, 
 
 ### disclaimer
 
