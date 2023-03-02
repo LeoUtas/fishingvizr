@@ -16,11 +16,14 @@ This R package can be used to request spatiotemporal fishing effort information 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_2.jpg?raw=true)
 #### Visualization of the fishing effort (fishing hours) requested for trawlers operating in 2022 within the 3LN divisions under the Northwest Atlantic Fisheries Organization (NAFO) management areas.
 
-
-
-
-
 ## User guide
+
+#### The author assumes that users have some experience with R programming language and general knowledge of fisheries management related to FAO fishing management area codes (see https://www.fao.org/fishery/en/area/search).  
+
+#### Package installation
+#### devtools::install_github("LeoUtas/fishingvizr")
+
+#### Determine 
 
 
 ## Bug report & collaboration 
