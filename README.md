@@ -20,10 +20,11 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### It might be more comfortable to use the package, if users have some experience with R programming language and general knowledge of fisheries management related to FAO fishing area codes (see https://www.fao.org/fishery/en/area/search).  
 
-#### Package installation
-#### devtools::install_github("LeoUtas/fishingvizr")
+#### Package installation: devtools::install_github("LeoUtas/fishingvizr")
 
-#### The first step is determining the fishing area/s. If the determined area/s is within the Northwest Atlantic (FAO Major Fishing Area 21), please see option 1; otherwise, please refer to option 2 below.
+
+
+#### The first step is visiting (https://globalfishingwatch.org/our-apis/)) to register and request an API access token. It is required to have access to GFW API. The next step is determining the fishing area/s. If the determined area/s is within the Northwest Atlantic (FAO Major Fishing Area 21), please see option 1; otherwise, please refer to option 2 below.
 
 ## Option 1:
 #### Due to the availability of geographic data for fishing areas within the Northwest Atlantic, it only requires two functions (i.e., get_rasters() and make_bubmap()) for generating fishing effort data and map visualization.
@@ -46,7 +47,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### Available gear type codes include "trawlers", "drifting_longlines", "fixed_gear", "set_longlines", "pots_and_traps" "set_gillnets", "purse_seines", "other_purse_seines", "tuna_purse_seines","pole_and_line."
 
-#### It is recommended that the user runs the function make_annual_ls(), taking the output of the function get_rasters() before running the function make_bubmap().
+#### * It is recommended that the user runs the function make_annual_ls(), taking the output of the function get_rasters() before running the function make_bubmap().
 
 #### make_bubmap() takes the following arguments:
 
@@ -62,6 +63,10 @@ This R package can be used to request spatiotemporal fishing effort information 
 | zero_fill | False | String |  | "#1A1A40" by default |
 | legend_title | True | String |  | None |
 | plot_tilte | False | String |  | "Fishing effort map" by default |
+
+#### There is an option to print map plots to jpg files using the function print_effort_map(), taking the output of the function make_bubmap() as its input to create a series of jpg files in a viz folder under the working directory.
+
+## Example of recommended practice:
 
 
 ## Bug report & collaboration 
