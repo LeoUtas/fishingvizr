@@ -28,25 +28,37 @@ This R package can be used to request spatiotemporal fishing effort information 
 #### Option 1:
 #### Due to the availability of geographic data for fishing areas within the Northwest Atlantic, it only requires two functions (i.e., get_rasters() and make_bubmap()) for generating fishing effort data and map visualization.
 
-#### get_rasters() requires the user to enter values for the following arguments:
+#### get_rasters() takes the following arguments:
 
 | Argument | Required | Format | Choices | Recommended |
 | :---: | :---: | :---: | :---: | --- |
-| spatial_resolution | True | String | "low" for 0.1 degree/ "high" for 0.01 degree | "high" |
-| temporal_resolution | True | String | "daily"/ "monthly"/"yearly" | "daily" |
+| spatial_resolution | True | String | "low" for 0.1 degree / "high" for 0.01 degree | "high" |
+| temporal_resolution | True | String | "daily" / "monthly" / "yearly" | "daily" |
 | group_by | False | String | "vessel_id" | "vessel_id" |
 | begin | True | integer | 2012:2023 | 2012:2022 |
 | end | True | integer | 2012:2023 | 2012:2022 |
 | selected_region | True | String | any of the available region codes | None |
-| gear_type | True | String | any of the available gear type codes/ default is to select all available gear types | None |
+| gear_type | True | String | any of the available gear type codes / default is to select all available gear types | None |
 | region_source | False | String | "user_json" | "user_json" |
 | key | True | String | visit (https://globalfishingwatch.org/our-apis) | None |
 
-#### Available region codes: 0A", "0B", "1A", "1B", "1C", "1D", "1E", "1F", "2G", "2H", "2J", "3K", "3L", "3M", "3N", "3O", "3Pn", "3Ps", "4R", "4S", "4T", "4Vn", "4Vs", "4W", "4X", "5Y", "5Ze", "5Zw", "6A", "6B", "6C", "6D", "6E", "6F", "6G", "6H."
+#### Available region codes include 0A", "0B", "1A", "1B", "1C", "1D", "1E", "1F", "2G", "2H", "2J", "3K", "3L", "3M", "3N", "3O", "3Pn", "3Ps", "4R", "4S", "4T", "4Vn", "4Vs", "4W", "4X", "5Y", "5Ze", "5Zw", "6A", "6B", "6C", "6D", "6E", "6F", "6G", "6H."
 
-#### Available gear type codes: "trawlers", "drifting_longlines", "fixed_gear", "set_longlines", "pots_and_traps" "set_gillnets", "purse_seines", "other_purse_seines", "tuna_purse_seines","pole_and_line."
+#### Available gear type codes include "trawlers", "drifting_longlines", "fixed_gear", "set_longlines", "pots_and_traps" "set_gillnets", "purse_seines", "other_purse_seines", "tuna_purse_seines","pole_and_line."
 
-  
+#### make_bubmap() takes the following arguments:
+
+| Argument | Required | Format | Choices | Recommended |
+| :---: | :---: | :---: | :---: | --- |
+| spatial_resolution | True | String | "low" for 0.1 degree / "high" for 0.01 degree | "high" |
+| temporal_resolution | True | String | "daily" / "monthly" / "yearly" | "daily" |
+| group_by | False | String | "vessel_id" | "vessel_id" |
+| begin | True | integer | 2012:2023 | 2012:2022 |
+| end | True | integer | 2012:2023 | 2012:2022 |
+| selected_region | True | String | any of the available region codes | None |
+| gear_type | True | String | any of the available gear type codes / default is to select all available gear types | None |
+| region_source | False | String | "user_json" | "user_json" |
+| key | True | String | visit (https://globalfishingwatch.org/our-apis) | None |
 
 
 ## Bug report & collaboration 
