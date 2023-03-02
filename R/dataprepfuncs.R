@@ -222,8 +222,8 @@ get_rasters = function(spatial_resolution, # low (0.1 degree) or high (0.01 degr
 
   response_df = response_df[response_df$effort > 0,]
 
-  retained_gear_type = tolower(gear_type)
-  if (retained_gear_type != "all"){
+  retained_gear_type = c(tolower(gear_type))
+  if (all(!(retained_gear_type %in% c("all")))){
     response_df = subset(response_df, gear_type %in% retained_gear_type)
   } else {
     response_df = response_df
