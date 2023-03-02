@@ -4,7 +4,8 @@ This R package can be used to request spatiotemporal fishing effort information 
 ## Introduction
 #### Global Fishing Watch (https://globalfishingwatch.org/about-us/) is an online platform that uses satellite technology to monitor and track fishing activities across the world’s oceans in real-time. It was founded in 2015 as a partnership between Google, Oceana, and SkyTruth, with the aim of increasing transparency and accountability in the fishing industry. One of the key features of Global Fishing Watch is its Application Programming Interface (API), providing a wealth of information, including vessel positions and movements and fishing activity. This R package was developed to ease the process of requesting fishing effort data from the Global Fishing Watch API (https://globalfishingwatch.org/our-apis/) and generating map plots for data visualization. The requested data are formatted as a data frame, and map plots can be printed to jpg files for users’ applications. 
 
-#### For example:
+#### Spatial fishing effort information is conventionally acquired through vessel monitoring systems (VMSs), making it typically a scarce resource in fisheries science due to confidentiality. The potential of utilizing the spatial fishing effort data and, more generally, fishing vessel tracking information is huge. For example, such information can be used to develop spatial stock assessment models for fish resources, analyze the impacts of fishing nearby marine protected areas (MPAs), assess fishing patterns, events, and so many more applications. 
+
 #### Example 1: A fishing effort data frame with the effort is measured in fishing hours. 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/dataframe.jpg?raw=true)
  
@@ -74,7 +75,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 ## Bug report & collaboration 
 #### For reporting bugs, please email hnguyenthe@mun.ca
-#### For collaborating, 
+#### For collaborating, the author is seeking collaboration to improve the data visualization of the package.
 
 ### disclaimer
 
