@@ -29,29 +29,25 @@ This R package can be used to request spatiotemporal fishing effort information 
 #### Due to the availability of geographic data for fishing areas within the Northwest Atlantic, it only requires two functions (i.e., get_rasters() and make_bubmap()) for generating fishing effort data and map visualization.
 
 #### get_rasters() requires the user to enter values for the following arguments, 
-#### spatial_resolution takes either "daily"
+####  takes either "daily"
 
-| Name | Age | Occupation |
-| :---: | :---: | --- |
-| John Doe | 25 | Developer |
-| Jane Smith | 30 | Designer |
-| Mike Johnson | 45 | Manager |
+| Argument | Required | Format | Choices | Recommended |
+| :---: | :---: | :---: | :---: | --- |
+| spatial_resolution | True | String | "low" for 0.1 degree/ "high" for 0.01 degree | "high" |
+| temporal_resolution | True | String | "daily"/ "monthly"/"yearly" | "daily" |
+| group_by | False | String | "vessel_id" | "vessel_id" |
+| begin | True | integer | 2012:2023 | 2012:2022 |
+| end | True | integer | 2012:2023 | 2012:2022 |
+| selected_region | True | String | any of the available region codes | None |
+| gear_type | True | String | any of the available gear type codes/ default is all gear types | None |
+| region_source | False | String | "user_json" | "user_json" |
+| key | True | String | visit (https://globalfishingwatch.org/our-apis) | None |
 
+#### available region codes: 0A", "0B", "1A", "1B", "1C", "1D", "1E", "1F", "2G", "2H", "2J", "3K", "3L", "3M", "3N", "3O", "3Pn", "3Ps", "4R", "4S", "4T", "4Vn", "4Vs", "4W", "4X", "5Y", "5Ze", "5Zw", "6A", "6B", "6C", "6D", "6E", "6F", "6G", "6H."
 
+#### available gear type codes: "trawlers", "drifting_longlines", "fixed_gear", "set_longlines", "pots_and_traps" "set_gillnets", "purse_seines", "other_purse_seines", "tuna_purse_seines","pole_and_line."
 
-
-
-
-, temporal_resolution,
-  group_by = "vessel_id",
-  begin,
-  end,
-  selected_region,
-  gear_type = "all",
-  region_source = "user_json",
-  key
-))
-
+  
 
 
 ## Bug report & collaboration 
