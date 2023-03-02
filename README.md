@@ -26,7 +26,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### The first step is visiting (https://globalfishingwatch.org/our-apis/)) to register and request an API access token. It is required to have access to GFW API. The next step is determining the fishing area/s. If the determined area/s is within the Northwest Atlantic (FAO Major Fishing Area 21), please see option 1; otherwise, please refer to option 2 below.
 
-## Option 1:
+### Option 1:
 #### Due to the availability of geographic data for fishing areas within the Northwest Atlantic, it only requires two functions (i.e., get_rasters() and make_bubmap()) for generating fishing effort data and map visualization.
 
 #### get_rasters() takes the following arguments:
@@ -66,8 +66,8 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### There is an option to print map plots to jpg files using the function print_effort_map(), taking the output of the function make_bubmap() as its input to create a series of jpg files in a viz folder under the working directory.
 
-## Example of recommended practice:
-
+### Example of recommended practice:
+### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/practice.jpg?raw=true)
 
 ## Bug report & collaboration 
 
