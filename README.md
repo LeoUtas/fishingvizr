@@ -10,11 +10,11 @@ This R package can be used to request spatiotemporal fishing effort information 
  
 #### Example 2: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_1.jpg?raw=true)
-#### Visualization of the fishing effort (fishing hours) requested for all gear types operating in 2022 within the 3LN divisions under the Northwest Atlantic Fisheries Organization (NAFO) management areas.
+#### Visualization of the fishing effort (fishing hours) requested for all gear types operating in 2022 within the 3LNO divisions under the Northwest Atlantic Fisheries Organization (NAFO) management areas.
 
 #### Example 3: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_2.jpg?raw=true)
-#### Visualization of the fishing effort (fishing hours) requested for trawlers operating in 2022 within the 3LN divisions under the Northwest Atlantic Fisheries Organization (NAFO) management areas.
+#### Visualization of the fishing effort (fishing hours) requested for trawlers operating in 2022 within the 3LNO divisions under the Northwest Atlantic Fisheries Organization (NAFO) management areas.
 
 ## User guide
 
