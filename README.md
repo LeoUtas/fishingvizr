@@ -75,8 +75,8 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 
 ## Bug report & collaboration 
-#### For reporting bugs, please email hnguyenthe@mun.ca
-#### For collaborating, the author is seeking collaborations to improve the data visualization of the package.
+#### For reporting bugs, please email hnguyenthe@mun.ca.
+#### For collaborating, the author is seeking collaborations to improve the data visualization of the package, please email hnguyenthe@mun.ca.
 
 ### Disclaimer
 #### This package was created to make retrieving data from the GFW API easier. The complex technologies applied to produce the data belong to Global Fishing Watch.
