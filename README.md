@@ -46,7 +46,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### * It is recommended that the user runs the function make_annual_ls(), taking the output of the function get_rasters() before running the function make_bubmap().
 
-#### make_bubmap() takes the following arguments:
+#### make_bubmap() takes the output of the function make_annual_ls() to generate a list of map plots, has the following arguments:
 
 | Argument | Required | Format | Choices | Recommended |
 | :---: | :---: | :---: | :---: | --- |
