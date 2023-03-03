@@ -8,7 +8,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### Example 1: A fishing effort data frame with the effort is measured in fishing hours. 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/dataframe.jpg?raw=true)
-#### *The actual vessel names are modified
+#### *The actual vessel names were modified
 
 #### Example 2: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_1.jpg?raw=true)
@@ -78,4 +78,4 @@ This R package can be used to request spatiotemporal fishing effort information 
 #### For collaborating, the author is seeking collaborations to improve the data visualization of the package, please email hnguyenthe@mun.ca.
 
 ### Disclaimer
-#### This package was created to make retrieving and visualizing fishing effort data from the GFW API easier. The complex technologies applied to produce the data belong to Global Fishing Watch. In addition, the author is looking for a consultation with the GFW regarding the coordinate system used in making their map.
+#### This package was created to make retrieving and visualizing fishing effort data from the GFW API easier. The complex technologies applied to produce the data belong to Global Fishing Watch. The accuracy and reliability of the data are highly dependent on GFW's technology.
