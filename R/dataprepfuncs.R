@@ -9,8 +9,8 @@
 
 
 # ---------- AVAILABLE REGIONS ----------- #
-shp_source = read_sf("inst/extdata/shp/NAFO_divisions.shp")
-available_regions = sort(unique(shp_source$ZONE))
+shp_source = read_sf("inst/extdata/shp/FAO_AREAS_CWP.shp")
+available_regions = sort(unique(shp_source$F_CODE))
 
 
 # ---------- DATA PREPARATION FUNCTION 1 ----------- #
@@ -22,24 +22,25 @@ available_regions = sort(unique(shp_source$ZONE))
 #' @export
 #'
 #' @examples
-#' make_selected_region(c("3L","3N"))
+#' make_selected_region(c("21.3.L","21.3.N"))
 #' # Returns:
-#' Simple feature collection with 2 features and 5 fields
-#' Geometry type: POLYGON
+#' Simple feature collection with 3 features and 15 fields
+#' Geometry type: MULTIPOLYGON
 #' Dimension:     XY
 #' Bounding box:  xmin: -54.5 ymin: 39 xmax: -46.5 ymax: 49.25
-#' Geodetic CRS:  NAD83
-#' A tibble: 2 × 6
-#' AREA PERIMETER NAFO_ NAFO_ID ZONE                                              geometry
-#' <dbl>     <dbl> <int>   <int> <chr>                                        <POLYGON [°]>
-#' 1  23.0      48.9   529       0 3L    ((-53.73892 48.99732, -53.74253 49.00458, -53.74747…
-#' 2  31.0      22.4   594       0 3N    ((-50.76667 46, -50.75 46, -50.73333 46, -50.71667 …
+#' Geodetic CRS:  WGS 84
+#' # A tibble: 3 × 16
+#' F_CODE F_LEVEL  F_STATUS OCEAN    SUBOCEAN F_AREA F_SUBA…¹ F_DIV…² F_SUB…³ F_SUB…⁴    ID
+#' <chr>  <chr>       <dbl> <chr>    <chr>    <chr>  <chr>    <chr>   <chr>   <chr>   <int>
+#'1 21.3.O DIVISION        1 Atlantic 2        21     21.3     21.3.O  NA      NA        201
+#'2 21.3.N DIVISION        1 Atlantic 2        21     21.3     21.3.N  NA      NA        218
+#'3 21.3.L DIVISION        1 Atlantic 2        21     21.3     21.3.L  NA      NA        239
 #'
 make_selected_region = function(region) {
 
   region = region
 
-  selected_region = subset(shp_source, ZONE %in% region)
+  selected_region = subset(shp_source, F_CODE %in% region)
   return(selected_region)
 
 }
@@ -57,7 +58,7 @@ make_selected_region = function(region) {
 #' @export
 #'
 #' @examples
-#' make_region_json(c("3L","3N"))
+#' make_region_json(c("21.3.L","21.3.N"))
 #' # Returns:
 #' "{\"geojson\":{\"type\":\"Polygon\",\"coordinates\":[ [[-53.7389,48.9973],
 #' [-53.7425,49.0046],[-53.7475,49.0045],[-53.7484,49.0037],[-53.7559,49.0037],

@@ -16,17 +16,18 @@ Returns the geometry information of the selected fishing regions
 Creates selected fishing regions
 }
 \examples{
-make_selected_region(c("3L","3N"))
+make_selected_region(c("21.3.L","21.3.N"))
 # Returns:
-Simple feature collection with 2 features and 5 fields
-Geometry type: POLYGON
+Simple feature collection with 3 features and 15 fields
+Geometry type: MULTIPOLYGON
 Dimension:     XY
 Bounding box:  xmin: -54.5 ymin: 39 xmax: -46.5 ymax: 49.25
-Geodetic CRS:  NAD83
-A tibble: 2 × 6
-AREA PERIMETER NAFO_ NAFO_ID ZONE                                              geometry
-<dbl>     <dbl> <int>   <int> <chr>                                        <POLYGON [°]>
-1  23.0      48.9   529       0 3L    ((-53.73892 48.99732, -53.74253 49.00458, -53.74747…
-2  31.0      22.4   594       0 3N    ((-50.76667 46, -50.75 46, -50.73333 46, -50.71667 …
+Geodetic CRS:  WGS 84
+# A tibble: 3 × 16
+F_CODE F_LEVEL  F_STATUS OCEAN    SUBOCEAN F_AREA F_SUBA…¹ F_DIV…² F_SUB…³ F_SUB…⁴    ID
+<chr>  <chr>       <dbl> <chr>    <chr>    <chr>  <chr>    <chr>   <chr>   <chr>   <int>
+1 21.3.O DIVISION        1 Atlantic 2        21     21.3     21.3.O  NA      NA        201
+2 21.3.N DIVISION        1 Atlantic 2        21     21.3     21.3.N  NA      NA        218
+3 21.3.L DIVISION        1 Atlantic 2        21     21.3     21.3.L  NA      NA        239
 
 }

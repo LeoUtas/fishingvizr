@@ -19,7 +19,7 @@ Extracts the coordinates information and turn them into json data
 to use in the function get_raster()
 }
 \examples{
-make_region_json(c("3L","3N"))
+make_region_json(c("21.3.L","21.3.N"))
 # Returns:
 "{\"geojson\":{\"type\":\"Polygon\",\"coordinates\":[ [[-53.7389,48.9973],
 [-53.7425,49.0046],[-53.7475,49.0045],[-53.7484,49.0037],[-53.7559,49.0037],
