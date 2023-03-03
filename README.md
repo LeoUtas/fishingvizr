@@ -12,15 +12,15 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### Example 2: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_1.jpg?raw=true)
-#### Visualization of the fishing effort (fishing hours) requested for all gear types operating in 2022 within the NAFO 3LNO divisions (i.e., the FAO 21.3.L, FAO 21.3.N, and FAO 21.3.O).
+#### Visualization of the fishing effort (fishing hours) by all gear types operating in 2022 within the NAFO 3LNO divisions (i.e., the FAO 21.3.L, FAO 21.3.N, and FAO 21.3.O).
 
 #### Example 3: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_2.jpg?raw=true)
-#### Visualization of the fishing effort (fishing hours) requested for trawlers operating in 2022 within the NAFO 3LNO divisions (i.e., the FAO 21.3.L, FAO 21.3.N, and FAO 21.3.O).
+#### Visualization of the fishing effort (fishing hours) by trawlers operating in 2022 within the NAFO 3LNO divisions (i.e., the FAO 21.3.L, FAO 21.3.N, and FAO 21.3.O).
 
 #### Example 4: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_3.jpg?raw=true)
-#### Visualization of the fishing effort (fishing hours) requested for trawlers operating in 2022 within the Southern Australia (i.e., the FAO 57.6).
+#### Visualization of the fishing effort (fishing hours) by trawlers operating in 2022 within the Southern Australia (i.e., the FAO 57.6).
 
 ## User guide
 
