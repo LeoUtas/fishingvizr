@@ -40,13 +40,14 @@ This R package can be used to request spatiotemporal fishing effort information 
 | region_source | False | String | "user_json" | "user_json" |
 | key | True | String | visit (https://globalfishingwatch.org/our-apis) | None |
 
-#### Available region codes include 
+#### Available region codes include (see https://www.fao.org/fishery/en/area/search, and https://fish-commercial-names.ec.europa.eu/fish-names/fishing-areas_en)
+### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/available_regions.jpg?raw=true)
 
 #### Available gear type codes include "trawlers", "drifting_longlines", "fixed_gear", "set_longlines", "pots_and_traps" "set_gillnets", "purse_seines", "other_purse_seines", "tuna_purse_seines","pole_and_line."
 
 #### * It is recommended that the user runs the function make_annual_ls(), taking the output of the function get_rasters() before running the function make_bubmap().
 
-#### make_bubmap() takes the following arguments:
+#### make_bubmap() takes the output of the function make_annual_ls() to generate a list of map plots, has the following arguments:
 
 | Argument | Required | Format | Choices | Recommended |
 | :---: | :---: | :---: | :---: | --- |
