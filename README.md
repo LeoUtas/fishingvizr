@@ -28,7 +28,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### Package installation: devtools::install_github("LeoUtas/fishingvizr")
 
-#### The first step is visiting (https://globalfishingwatch.org/our-apis/) to register and request an API access token. It is required to have access to GFW API. The next step is determining the fishing area/s, then applying the following functions.
+#### The first step is visiting (https://globalfishingwatch.org/our-apis/) to register and request an API access token. It is required to have access to GFW API. Secondly, it is determining the fishing area/s. The next step is running the following functions.
 
 #### get_rasters() requests fishing effort data from the GFW API and turns the data into a data frame. It takes the following arguments:
 
