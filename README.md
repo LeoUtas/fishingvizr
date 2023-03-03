@@ -12,11 +12,11 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### Example 2: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_1.jpg?raw=true)
-#### Visualization of the fishing effort (fishing hours) requested for all gear types operating in 2022 within the 3LNO divisions under the Northwest Atlantic Fisheries Organization (NAFO) management areas.
+#### Visualization of the fishing effort (fishing hours) requested for all gear types operating in 2022 within the NAFO 3LNO divisions (i.e., the FAO 21.3.L, FAO 21.3.N, and FAO 21.3.O).
 
 #### Example 3: 
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/viz/effort_map_2.jpg?raw=true)
-#### Visualization of the fishing effort (fishing hours) requested for trawlers operating in 2022 within the 3LNO divisions under the Northwest Atlantic Fisheries Organization (NAFO) management areas.
+#### Visualization of the fishing effort (fishing hours) requested for trawlers operating in 2022 within the NAFO 3LNO divisions (i.e., the FAO 21.3.L, FAO 21.3.N, and FAO 21.3.O).
 
 ## User guide
 
@@ -24,12 +24,9 @@ This R package can be used to request spatiotemporal fishing effort information 
 
 #### Package installation: devtools::install_github("LeoUtas/fishingvizr")
 
-#### The first step is visiting (https://globalfishingwatch.org/our-apis/) to register and request an API access token. It is required to have access to GFW API. The next step is determining the fishing area/s. If the determined area/s is within the Northwest Atlantic (FAO Major Fishing Area 21), please see option 1; otherwise, please refer to option 2.
+#### The first step is visiting (https://globalfishingwatch.org/our-apis/) to register and request an API access token. It is required to have access to GFW API. The next step is determining the fishing area/s, then applying the following functions.
 
-### Option 1:
-#### Due to the availability of geographic data for fishing areas within the Northwest Atlantic, it only requires two functions (i.e., get_rasters() and make_bubmap()) for generating fishing effort data and map visualization.
-
-#### get_rasters() takes the following arguments:
+#### get_rasters() requests fishing effort data from the GFW API and turns the data into a data frame. It takes the following arguments:
 
 | Argument | Required | Format | Choices | Recommended |
 | :---: | :---: | :---: | :---: | --- |
@@ -43,7 +40,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 | region_source | False | String | "user_json" | "user_json" |
 | key | True | String | visit (https://globalfishingwatch.org/our-apis) | None |
 
-#### Available region codes include "0A", "0B", "1A", "1B", "1C", "1D", "1E", "1F", "2G", "2H", "2J", "3K", "3L", "3M", "3N", "3O", "3Pn", "3Ps", "4R", "4S", "4T", "4Vn", "4Vs", "4W", "4X", "5Y", "5Ze", "5Zw", "6A", "6B", "6C", "6D", "6E", "6F", "6G", "6H."
+#### Available region codes include 
 
 #### Available gear type codes include "trawlers", "drifting_longlines", "fixed_gear", "set_longlines", "pots_and_traps" "set_gillnets", "purse_seines", "other_purse_seines", "tuna_purse_seines","pole_and_line."
 
@@ -63,20 +60,17 @@ This R package can be used to request spatiotemporal fishing effort information 
 | zero_fill | False | String |  | "#1A1A40" by default |
 | legend_title | True | String |  | None |
 | plot_tilte | False | String |  | "Fishing effort map" by default |
+| zeronote | False | String |  | "" to avoid redundant legend |
+
 
 #### There is an option to print map plots to jpg files using the function print_effort_map(), taking the output of the function make_bubmap() as its input to create a series of jpg files in a viz folder under the working directory.
 
 ### Example of recommended practice:
 ### ![text](https://github.com/LeoUtas/fishingvizr/blob/main/example/practice.jpg?raw=true)
 
-### Option 2:
-### will be written up on Sunday
-
-
-
 ## Bug report & collaboration 
 #### For reporting bugs, please email hnguyenthe@mun.ca.
 #### For collaborating, the author is seeking collaborations to improve the data visualization of the package, please email hnguyenthe@mun.ca.
 
 ### Disclaimer
-#### This package was created to make retrieving and visualizing fishing effort data from the GFW API easier. The complex technologies applied to produce the data belong to Global Fishing Watch.
+#### This package was created to make retrieving and visualizing fishing effort data from the GFW API easier. The complex technologies applied to produce the data belong to Global Fishing Watch. In addition, the author is looking for a consultation with the GFW regarding the coordinate system used in making their map.
