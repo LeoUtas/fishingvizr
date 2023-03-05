@@ -5,8 +5,8 @@ make_effortdens_rt = function(data, TriList = Trilist) {
   data = data
   # to construct a matrix of sum for year and triangle
   {
-    mat = aggregate(amount ~ year + r_i, data = data, FUN = sum)
-    matrix1 = matrix(mat$amount, nrow = length(unique(data$r_i)), ncol = length(unique(data$year)))
+    mat = aggregate(effort ~ year + r_i, data = data, FUN = sum)
+    matrix1 = matrix(mat$effort, nrow = length(unique(data$r_i)), ncol = length(unique(data$year)))
     rownames(matrix1) = sort(unique(data$r_i))
     colnames(matrix1) = sort(unique(data$year))
   }
