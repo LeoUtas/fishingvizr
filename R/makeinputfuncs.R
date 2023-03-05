@@ -2,6 +2,7 @@
 
 make_effortdens_rt = function(data, TriList = Trilist) {
 
+  data = data
   # to construct a matrix of sum for year and triangle
   {
     mat = aggregate(amount ~ year + r_i, data = data, FUN = sum)
