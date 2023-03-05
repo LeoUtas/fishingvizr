@@ -7,7 +7,7 @@
 #' @importFrom jsonlite toJSON
 #' @importFrom magrittr %>%
 
-devtools::install_github("GlobalFishingWatch/gfwr")
+devtools::install_github("GlobalFishingWatch/gfwr", force = TRUE)
 
 # ---------- AVAILABLE REGIONS ----------- #
 shp_source = read_sf("inst/extdata/shp/FAO_AREAS_CWP.shp")
