@@ -1,20 +1,20 @@
 
 
-make_effortdens_rt = function(data, TriList = Trilist) {
+make_effortdens_rt = function(data, Tri_Area) {
 
   data = data
   # to construct a matrix of sum for year and triangle
   {
-    mat = aggregate(amount ~ year + r_i, data = data, FUN = sum)
-    matrix1 = matrix(mat$amount, nrow = length(unique(data$r_i)), ncol = length(unique(data$year)))
+    mat = aggregate(effort ~ year + r_i, data = data, FUN = sum)
+    matrix1 = matrix(mat$effort, nrow = length(unique(data$r_i)), ncol = length(unique(data$year)))
     rownames(matrix1) = sort(unique(data$r_i))
     colnames(matrix1) = sort(unique(data$year))
   }
 
-  Trilist = Trilist
+  Tri_Area = Tri_Area
   {
-    matrix2 = matrix(TriList$Tri_Area, nrow = length(TriList$Tri_Area), ncol = 1)
-    rownames(matrix2) = c(1:length(TriList$Tri_Area))
+    matrix2 = matrix(Tri_Area, nrow = length(Tri_Area), ncol = 1)
+    rownames(matrix2) = c(1:length(Tri_Area))
     colnames(matrix2) = 1
   }
 
@@ -32,9 +32,9 @@ make_effortdens_rt = function(data, TriList = Trilist) {
   # to make a matrix of fishing effort in the triangles
   {
     matrix4 = matrix(ncol = length(unique(data$year)),
-                     nrow = length(unique(TriList$Tri_Area))
+                     nrow = length(unique(Tri_Area))
     )
-    rownames(matrix4) = c(1:length(unique(TriList$Tri_Area)))
+    rownames(matrix4) = c(1:length(unique(Tri_Area)))
     colnames(matrix4) = sort(unique(data$year))
   }
 
