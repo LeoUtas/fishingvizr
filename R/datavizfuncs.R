@@ -30,7 +30,7 @@
 #' @param ...
 #'
 #' @return Returns a map background object
-#' @export
+#' # remove export
 #'
 #' @examples
 #' make_map_background(selected_map_region = c("3K", "3L", "3N", "3M", "3O", "3Ps", "3Pn"))

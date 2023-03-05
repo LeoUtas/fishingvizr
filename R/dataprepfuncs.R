@@ -19,7 +19,7 @@ available_regions = sort(unique(shp_source$F_CODE))
 #' @param region
 #'
 #' @return Returns the geometry information of the selected fishing regions
-#' @export
+#' # remove export
 #'
 #' @examples
 #' make_selected_region(c("21.3.L","21.3.N"))
@@ -55,7 +55,7 @@ make_selected_region = function(region) {
 #' @return
 #' Returns a json file containing coordinates information of the
 #' selected fishing regions that is required in the function get_rasters()
-#' @export
+#' # remove export
 #'
 #' @examples
 #' make_region_json(c("21.3.L","21.3.N"))
@@ -92,7 +92,7 @@ make_region_json = function(selected_region) {
 #'
 #' @return
 #' Returns list of strings containing begin and end years
-#' @export
+#' # remove export
 #'
 #' @examples
 #'make_year_range(2012,2018)
