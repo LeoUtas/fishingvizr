@@ -55,32 +55,31 @@ make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
 
 
 # ------------------ TEST CODE ------------------ #
-year_test = c(2001:2002,2003,2003,2004:2006,2006,2006,2007,2007:2010,2010,2010)
-r_i_test = c(4,5,5,6,1:2,3,3,3,4,6:8,8,9,9)
-value_test = c(1.5:16.5)
+# year_test = c(2001:2002,2003,2003,2004:2006,2006,2006,2007,2007:2010,2010,2010)
+# r_i_test = c(4,5,5,6,1:2,3,3,3,4,6:8,8,9,9)
+# value_test = c(1.5:16.5)
 
-A = data.frame("year" = year_test,
-               "r_i" = r_i_test,
-               "value1" = value_test,
-               "value2" = value_test*2
-)
+# A = data.frame("year" = year_test,
+#                "r_i" = r_i_test,
+#                "value1" = value_test,
+#                "value2" = value_test*2
+# )
 
-# Compute cross-tabulated object
-xt <- xtabs(value1 ~ r_i + year, data = A)
-# Convert cross-tabulated object to data frame
-B1 <- as.data.frame.matrix(xt)
+# # Compute cross-tabulated object
+# xt <- xtabs(value1 ~ r_i + year, data = A)
+# # Convert cross-tabulated object to data frame
+# B1 <- as.data.frame.matrix(xt)
 
-B2 <- as.data.frame.matrix(xtabs(value1 ~ r_i + year, data = A))
-B2 <- replace(B, is.na(B), 0)
+# B2 <- as.data.frame.matrix(xtabs(value1 ~ r_i + year, data = A))
+# B2 <- replace(B, is.na(B), 0)
 
-C = data.frame("r1_i" = sort(unique(r_i)),
-               "bottom" = c(2:10))
+# C = data.frame("r1_i" = sort(unique(r_i)),
+#                "bottom" = c(2:10))
 
-# Loop over columns of B and divide each value by corresponding value in C
-for (col in names(B2)[-1]) {
-  B2[, col] <- B2[, col] / C[match(rownames(B2), C$r_i), "bottom"]
-}
-
+# # Loop over columns of B and divide each value by corresponding value in C
+# for (col in names(B2)[-1]) {
+#   B2[, col] <- B2[, col] / C[match(rownames(B2), C$r_i), "bottom"]
+# }
 
 
 
