@@ -281,7 +281,7 @@ make_annual_ls = function(data) {
   for (i in 1:length(ls_org)) {
 
     ls[[i]] = ls_org[[i]] %>%
-      group_by(positionStr) %>%
+      group_by(lat, long) %>%
       reframe(N=n(),
               effort = sum(effort),
               lat = lat, long = long,
