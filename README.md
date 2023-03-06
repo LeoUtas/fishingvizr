@@ -27,6 +27,7 @@ This R package can be used to request spatiotemporal fishing effort information 
 #### It is more comfortable to use the package, if users have some experience with R programming language (https://www.r-project.org/) and general knowledge of fisheries management related to FAO fishing area codes (see https://www.fao.org/fishery/en/area/search).  
 
 #### Package installation: devtools::install_github("LeoUtas/fishingvizr")
+#### Required package installation: devtools::install_github("GlobalFishingWatch/gfwr") (possibly required)
 
 #### The first step is visiting (https://globalfishingwatch.org/our-apis/) to register and request an API access token. It is required to have access to GFW API. Secondly, it is determining the fishing area/s. The next step is running the following functions.
 
