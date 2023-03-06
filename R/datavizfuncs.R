@@ -68,7 +68,7 @@ make_map_background = function(selected_map_region,
                      panel.background = element_rect(fill = panel_fill, color = panel_color, size = axis_line_size),
                      legend.title  = element_text(size = legend_title_size),
                      legend.text = element_text(size = legend_text_size),
-                     legend.position = c(.12,.25),
+                     legend.position = "right",
                      legend.background = element_rect(fill = "transparent")
       )
   }
