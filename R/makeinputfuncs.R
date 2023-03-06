@@ -1,5 +1,43 @@
 
 
+# this chunk of codes works the same way the "Session => Set Working Directory => To Source File Location" does
+get_backto_WD = function() {
+  {
+    library(rstudioapi)
+    # Get the path of the active file
+    active_file <- getActiveDocumentContext()$path
+    file_path <- rstudioapi::getSourceEditorContext()$path
+    if (is.null(file_path)) {
+      file_path <- active_file
+    }
+
+    # Set the working directory to the parent directory
+    setwd(file.path(file_path, ".."))
+  }
+}
+
+
+# This chunk of codes is to check if there is any repetitive locations (i.e., same lat and long)
+test_repetitive_locs = function(data) {
+
+  data = data
+
+  for (year in unique(data$year)) {
+
+    X1 = length(unique(data$positionStr[data$year==year]))
+    X2 = dim(data[data$year==year,])[1]
+
+    difference = try(X2 - X1, silent = TRUE)
+
+    if (difference != 0) {
+      print(paste("Difference = ", difference, sep = ""))
+    } else {
+      print("Difference = 0")
+    }
+  }
+}
+
+
 make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
 
   data = data
