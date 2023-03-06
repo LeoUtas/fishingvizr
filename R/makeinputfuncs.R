@@ -1,57 +1,86 @@
 
 
-make_effortdens_rt = function(data, Tri_Area) {
+make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
 
   data = data
-  # to construct a matrix of sum for year and triangle
-  {
-    mat = aggregate(effort ~ year + r_i, data = data, FUN = sum)
-    matrix1 = matrix(mat$effort, nrow = length(unique(data$r_i)), ncol = length(unique(data$year)))
-    rownames(matrix1) = sort(unique(data$r_i))
-    colnames(matrix1) = sort(unique(data$year))
-  }
+  df1 = data.frame("year" = data$year,
+                   "r_i" = data$r_i,
+                   "effort" = data$effort)
+  # compute cross-tabulated object
+  df2 = as.data.frame.matrix(xtabs(effort ~ r_i + year, data = df1))
 
   Tri_Area = Tri_Area
+  # create a data frame of NA with ncol=number of years & nrow=number of triangles
   {
-    matrix2 = matrix(Tri_Area, nrow = length(Tri_Area), ncol = 1)
-    rownames(matrix2) = c(1:length(Tri_Area))
-    colnames(matrix2) = 1
-  }
-
-  # to divide the sum of effort in each triangle by the triangle area
-  {
-    matrix3 = matrix(nrow = nrow(matrix1), ncol = ncol(matrix1))
-    for (i in 1:ncol(matrix1)) {
-      row_indices = match(rownames(matrix1), rownames(matrix2))
-      matrix3[,i] = matrix1[,i] / matrix2[row_indices,1]
-    }
-    rownames(matrix3) = sort(unique(data$r_i))
-    colnames(matrix3) = sort(unique(data$year))
-  }
-
-  # to make a matrix of fishing effort in the triangles
-  {
-    matrix4 = matrix(ncol = length(unique(data$year)),
-                     nrow = length(unique(Tri_Area))
+    df3 = as.data.frame(matrix(ncol = length(unique(df1$year)),
+                               nrow = length(unique(Tri_Area)))
     )
-    rownames(matrix4) = c(1:length(unique(Tri_Area)))
-    colnames(matrix4) = sort(unique(data$year))
+    rownames(df3) = c(1:length(unique(Tri_Area)))
+    colnames(df3) = sort(unique(df1$year))
   }
 
-  for (i in 1:nrow(matrix4)) {
-    row_name <- rownames(matrix4)[i]
-    if (row_name %in% rownames(matrix3)) {
-      row_index <- which(rownames(matrix3) == row_name)
-      matrix4[i, ] <- matrix3[row_index, ]
+  # replace NA by corresponding values
+  for (i in 1:nrow(df3)) {
+    row_name <- rownames(df3)[i]
+    if (row_name %in% rownames(df2)) {
+      row_index <- which(rownames(df2) == row_name)
+      df3[i, ] <- df2[row_index, ]
     } else {
-      matrix4[i, ] <- 0
+      df3[i, ] <- 0
     }
   }
-  effortdens_rt = matrix4
+
+  df4 = df3
+
+  df5 = data.frame("r_i" = c(1:length(TriList$Tri_Area)),
+                   "Tri_Area" = TriList$Tri_Area)
+
+  for (col in names(df4)) {
+    df4[, col] <- df4[, col] / df5[match(rownames(df4), df5$r_i), "Tri_Area"]
+  }
+
+  effortdens_rt = df4
 
   return(effortdens_rt)
 
 }
+
+
+
+
+
+
+
+
+
+
+# ------------------ TEST CODE ------------------ #
+year_test = c(2001:2002,2003,2003,2004:2006,2006,2006,2007,2007:2010,2010,2010)
+r_i_test = c(4,5,5,6,1:2,3,3,3,4,6:8,8,9,9)
+value_test = c(1.5:16.5)
+
+A = data.frame("year" = year_test,
+               "r_i" = r_i_test,
+               "value1" = value_test,
+               "value2" = value_test*2
+)
+
+# Compute cross-tabulated object
+xt <- xtabs(value1 ~ r_i + year, data = A)
+# Convert cross-tabulated object to data frame
+B1 <- as.data.frame.matrix(xt)
+
+B2 <- as.data.frame.matrix(xtabs(value1 ~ r_i + year, data = A))
+B2 <- replace(B, is.na(B), 0)
+
+C = data.frame("r1_i" = sort(unique(r_i)),
+               "bottom" = c(2:10))
+
+# Loop over columns of B and divide each value by corresponding value in C
+for (col in names(B2)[-1]) {
+  B2[, col] <- B2[, col] / C[match(rownames(B2), C$r_i), "bottom"]
+}
+
 
 
 
