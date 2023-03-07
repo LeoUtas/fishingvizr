@@ -51,9 +51,9 @@ make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
   # create a data frame of NA with ncol=number of years & nrow=number of triangles
   {
     df3 = as.data.frame(matrix(ncol = length(unique(df1$year)),
-                               nrow = length(unique(Tri_Area)))
+                               nrow = length(Tri_Area))
     )
-    rownames(df3) = c(1:length(unique(Tri_Area)))
+    rownames(df3) = c(1:length(Tri_Area))
     colnames(df3) = sort(unique(df1$year))
   }
 
