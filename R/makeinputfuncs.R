@@ -37,7 +37,7 @@ test_repetitive_locs = function(data) {
   }
 }
 
-
+# to make effortdens_rt matrix
 make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
 
   data = data
@@ -82,6 +82,57 @@ make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
   return(effortdens_rt)
 
 }
+
+# to fit the model
+fit_the_model = function(tmb_data, tmb_pars) {
+
+  dyn.load("mesh_model_v5m_test_Qcoef_orgFt_Tweedie")
+
+  rname = c("ln_u_gt", "Omegainput_g"
+  )
+
+  map = list(ln_p_par2 = factor(NA))
+
+  obj <- MakeADFun(tmb_data, tmb_pars,
+                   random = rname,
+                   map = map,
+                   DLL = "mesh_model_v5m_test_Qcoef_orgFt_Tweedie",
+                   random.start = expression(last.par[random]),
+                   inner.control = list(maxit = 10000,trace = F)
+  )
+
+  system.time(
+    opt<-nlminb(obj$par,obj$fn,obj$gr,
+                control = list(trace=1,iter.max=10000,eval.max=10000,sing.tol=1e-20))
+  )
+
+  for (i in c(1:10)) {
+
+    if (opt$convergence != 0) {
+
+      system.time(
+        opt<-nlminb(opt$par,obj$fn,obj$gr,#lower=lower,upper=upper,
+                    control = list(trace=1,iter.max=10000,eval.max=10000,sing.tol=1e-20))
+      )
+
+    }
+
+  }
+
+  opt_mes = opt$convergence
+  opt_obj = opt$objective
+
+  result = c(opt_mes, opt_obj, tmb_pars$ln_p_par2)
+
+  return(result)
+
+}
+
+
+
+
+
+
 
 
 
