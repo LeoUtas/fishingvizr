@@ -123,7 +123,7 @@ fit_the_model = function(tmb_data, tmb_pars) {
   opt_obj = opt$objective
   parList = obj$env$parList()
 
-  result = c(opt_mes, opt_obj, tmb_pars$ln_p_par2, parList)
+  result = list(opt_mes, opt_obj, tmb_pars$ln_p_par2, parList)
 
   return(result)
 
