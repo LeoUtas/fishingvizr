@@ -106,7 +106,7 @@ fit_the_model = function(tmb_data, tmb_pars) {
                 control = list(trace=1,iter.max=10000,eval.max=10000,sing.tol=1e-20))
   )
 
-  for (i in c(1:10)) {
+  for (i in c(1:20)) {
 
     if (opt$convergence != 0) {
 
