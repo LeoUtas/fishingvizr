@@ -16,6 +16,7 @@ make_tri_mesh = function (convex, cutoff, lok_center, data) {
   MeshList <- MovementTools::Make_Movement_Mesh(loc_orig = loc_k, Cutoff = cutoff)
   TriList <- MovementTools::TriList_Fn(mesh = MeshList$mesh_domain)
   r_i <- MovementTools::Loc2Tri_Fn(locmat=loc, TriList=TriList)
+  # add the r_i to the data df
   data$r_i = r_i
 
   output = list(data, TriList)
@@ -25,44 +26,41 @@ make_tri_mesh = function (convex, cutoff, lok_center, data) {
 }
 
 
-make_effort_df = function (data) {
+make_effort_r_i = function (data, TriList) {
 
   data = data
+  TriList = TriList
 
   loc = cbind(data$long, data$lat)
+  error_count = 0
+  tri_found = rep(NA,dim(loc)[1])
 
+  { # WARNING: VERY LONG TIME RUN
+    start_time = Sys.time()
+    for (i in 1:dim(loc)[1]) {
+      loc_i = loc[i,]
+      loc_i = matrix(loc_i, nrow = 1, ncol = 2)
+      error_r = try((loc_found_i = MovementTools::Loc2Tri_Fn(locmat=loc_i, TriList=TriList)),
+                    silent=TRUE)
 
-}
-
-
-
-
-# --------------------- APPLY THORSON'S CODE FOR EFFORT DATA --------------------#
-effortdensloc_org = cbind(effort3LN_df$long, effort3LN_df$lat)
-error_count = 0
-tri_found = rep(NA,dim(effortdensloc_org)[1])
-
-{ # WARNING: VERY LONG TIME RUN > 45 minutes, typically
-  start_time = Sys.time()
-  for (i in 1:dim(effortdensloc_org)[1]) {
-    loc_i = effortdensloc_org[i,]
-    loc_i = matrix(loc_i, nrow = 1, ncol = 2)
-    error_r = try((loc_found_i = MovementTools::Loc2Tri_Fn(locmat=loc_i, TriList=TriList)),
-                  silent=TRUE)
-
-    if ('try-error' %in% class(error_r)) {
-      error_count = error_count + 1
-      next
+      if ('try-error' %in% class(error_r)) {
+        error_count = error_count + 1
+        next
+      }
+      tri_found[i] = loc_found_i
     }
-    tri_found[i] = loc_found_i
+    end_time = Sys.time()
   }
-  end_time = Sys.time()
+
+  r_i = tri_found
+  # add the r_i to the data df
+  data$r_i = r_i
+  # remove the rows containing NA r_i
+  updated_data = data[complete.cases(data),]
+  output = list(updated_data, error_count)
+
+  return(output)
+
 }
 
-effortdensr_s = tri_found
-effort3LN_df2 = effort3LN_df
-effort3LN_df2$r_i = effortdensr_s
 
-
-# remove the rows containing NA r_i
-effort3LN_df2 = effort3LN_df2[complete.cases(effort3LN_df2),]

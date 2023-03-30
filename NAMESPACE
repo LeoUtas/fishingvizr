@@ -48,5 +48,7 @@ importFrom(MetBrewer,
            )
 #importFrom(viridis)
 #importFrom(INLA, "inla.nonconvex.hull")
-#importFrom(stats, "kmeans")
+importFrom(stats,
+           "kmeans",
+           "complete.cases")
 
