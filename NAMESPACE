@@ -31,7 +31,9 @@ importFrom(ggplot2,
            "element_blank",
            "element_line",
            "element_rect",
-           "theme"
+           "theme",
+           "margin",
+           
 
            )
 #importFrom(tigris)
