@@ -8,7 +8,7 @@
 #' @importFrom magrittr %>%
 
 devtools::install_github("GlobalFishingWatch/gfwr", force = TRUE)
-devtools::install_github("BlakeRMills/MetBrewer", force = TRUE)
+install.packages("MetBrewer")
 install.packages("colorspace")
 
 # ---------- AVAILABLE REGIONS ----------- #
