@@ -177,7 +177,7 @@ make_bubmap = function(data, selected_map_region, begin, end,
 #' @examples
 #' print_effort_map(effort_map = effort_map)
 #'
-print_map = function(effort_map, title) {
+print_map = function(map_input, title) {
 
   title = title
 
