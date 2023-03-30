@@ -6,7 +6,8 @@ importFrom(sf,
            "st_intersection",
            "st_crs",
            "st_sf",
-           "st_polygon")
+           "st_polygon",
+           "st_sfc")
 importFrom(dplyr,
            "group_by",
            "reframe",
