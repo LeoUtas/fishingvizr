@@ -32,9 +32,7 @@ importFrom(ggplot2,
            "element_line",
            "element_rect",
            "theme",
-           "margin",
-           
-
+           "margin"
            )
 #importFrom(tigris)
 #importFrom(tidyverse)
