@@ -33,7 +33,7 @@ importFrom(ggplot2,
            "element_rect",
            "theme",
            "margin"
-           
+
            )
 #importFrom(tigris)
 #importFrom(tidyverse)
@@ -47,4 +47,6 @@ importFrom(MetBrewer,
            "met.brewer"
            )
 #importFrom(viridis)
+#importFrom(INLA, "inla.nonconvex.hull")
+#importFrom(stats, "kmeans")
 
