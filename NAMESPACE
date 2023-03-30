@@ -1,17 +1,28 @@
 exportPattern("^[[:alpha:]]+")
 
-importFrom(sf, "read_sf", "st_coordinates")
-importFrom(dplyr, "group_by", "reframe", "n", "select")
+importFrom(sf,
+           "read_sf",
+           "st_coordinates",
+           "st_intersection",
+           "st_crs",
+           "st_sf")
+importFrom(dplyr,
+           "group_by",
+           "reframe",
+           "n",
+           "select")
 importFrom(gfwr, "get_raster")
 importFrom(jsonlite, "toJSON")
 importFrom(magrittr,"%>%")
 importFrom(ggplot2,
            "ggplot",
+           "ggtitle",
            "geom_sf",
            "geom_point",
            "aes",
            "scale_shape_manual",
            "scale_size_continuous",
+           "scale_fill_gradientn",
            "labs",
            "ggsave",
            "element_text",
@@ -21,3 +32,12 @@ importFrom(ggplot2,
            "theme"
 
            )
+#importFrom(tigris)
+#importFrom(tidyverse)
+#importFrom(stars)
+#importFrom(raster)
+#importFrom(rayshader)
+importFrom(colorspace,
+           "swatchplot")
+#importFrom(viridis)
+
