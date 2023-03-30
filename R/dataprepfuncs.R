@@ -8,8 +8,8 @@
 #' @importFrom magrittr %>%
 
 devtools::install_github("GlobalFishingWatch/gfwr", force = TRUE)
-install.packages("MetBrewer")
-install.packages("colorspace")
+#install.packages("MetBrewer")
+#install.packages("colorspace")
 
 # ---------- AVAILABLE REGIONS ----------- #
 shp_source = read_sf("inst/extdata/shp/FAO_AREAS_CWP.shp")
