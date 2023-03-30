@@ -133,31 +133,6 @@ fit_the_model = function(tmb_data, tmb_pars) {
 
 
 
-# create a list of polygons
-{
-  mat_ls = list()
-  poly_ls = list()
-  for (i in 1:length(TriList$Tri_Area)) {
-
-    mat_ls[[i]] =
-      as.matrix(
-        rbind(
-          V_ls[[1]][i,],
-          V_ls[[2]][i,],
-          V_ls[[3]][i,],
-          V_ls[[1]][i,]
-        )
-      )
-
-    poly_ls[[i]] <- st_polygon(list(mat_ls[[i]]))
-  }
-  crs <- st_crs("+proj=longlat +datum=WGS84")
-  poly_sf <- st_sf(geometry = st_sfc(poly_ls), crs = crs)
-}
-
-
-
-
 
 
 
