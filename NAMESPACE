@@ -33,7 +33,6 @@ importFrom(ggplot2,
            "element_rect",
            "theme",
            "margin",
-           
 
            )
 #importFrom(tigris)
@@ -43,5 +42,7 @@ importFrom(ggplot2,
 #importFrom(rayshader)
 importFrom(colorspace,
            "swatchplot")
+importFrom(MetBrewer,
+           "met.brewer")
 #importFrom(viridis)
 

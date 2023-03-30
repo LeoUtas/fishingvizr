@@ -171,7 +171,9 @@ make_polygons = function (data, n_loop) {
 # ---------- FUNCTION 6 ----------- #
 make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
                           legend_title = "Effort",
-                          plot_title = "Title") {
+                          plot_title = "Title",
+                          texture
+                          ) {
 
   data = data # data are TriList$V0, TriList$V2, TriList$V2
   n_loop = n_loop # n_loop = the number of triangles
@@ -183,6 +185,7 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
   selected_region = selected_region # use the FAO code
   legend_title = legend_title
   plot_title = plot_title
+  texture = texture
 
   # arrange inputs for the loop creating triangle plots
   {
@@ -204,7 +207,7 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
     # add the effort attribute to the sf object for year i
     poly_sf_ls[[i]]$effort = effortdens_rt[,i]
     # filter the sf object to use the data within the selected map only
-    filtered_poly_sf_ls[[i]] = st_intersection(poly_sf_ls[[i]], selected_map_region)
+    filtered_poly_sf_ls[[i]] = suppressWarnings(st_intersection(poly_sf_ls[[i]], selected_map_region))
 
     # plot the triangles of efforts
     Tri_plot_ls[[i]] = ggplot() +
