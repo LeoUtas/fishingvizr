@@ -177,9 +177,12 @@ make_bubmap = function(data, selected_map_region, begin, end,
 #' @examples
 #' print_effort_map(effort_map = effort_map)
 #'
-print_effort_map = function(effort_map) {
+print_map = function(effort_map, title) {
+
+  title = title
+
   for (i in 1:length(effort_map)) {
-    ggsave(filename = paste("effort_map_", i, ".jpg", sep = ""),
+    ggsave(filename = paste(title, "_map_", i, ".jpg", sep = ""),
            plot = effort_map[[i]],
            height = 22, width = 22, units = "cm",
            path = "viz/" )
