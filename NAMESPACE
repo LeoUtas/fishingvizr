@@ -32,8 +32,12 @@ importFrom(ggplot2,
            "element_line",
            "element_rect",
            "theme",
+<<<<<<< HEAD
            "margin",
 
+=======
+           "margin"
+>>>>>>> eec69851100455b0b0a0c617d0ca892b2ad33779
            )
 #importFrom(tigris)
 #importFrom(tidyverse)
