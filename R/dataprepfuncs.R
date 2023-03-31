@@ -159,8 +159,8 @@ make_year_range = function(begin,end) {
 #'     VESSEL1 2012    08  14 1.472222 48.60 -49.81  trawlers  CAN  48.6-49.81
 #'     VESSEL1 2012    08  17 1.234167 48.59 -49.79  trawlers  CAN 48.59-49.79
 #'
-get_rasters = function(spatial_resolution, # low (0.1 degree) or high (0.01 degree)
-                       temporal_resolution, # daily, monthly, or yearly
+get_rasters = function(spatial_resolution = "high", # low (0.1 degree) or high (0.01 degree)
+                       temporal_resolution = "daily", # daily, monthly, or yearly
                        group_by = "vessel_id", # vessel_id, flag, gearType, or flagAndGearType
                        begin, end, # begin and end dates
                        selected_region, # def by user
