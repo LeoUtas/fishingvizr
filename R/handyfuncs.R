@@ -43,7 +43,7 @@ test_repetitive_locs = function(data) {
 
 # ---------- FUNCTION 3 ----------- #
 # to make effortdens_rt matrix
-make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
+make_effortdens_rt = function(data, Tri_Area) {
 
   data = data
   df1 = data.frame("year" = data$year,
