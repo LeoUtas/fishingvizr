@@ -75,8 +75,8 @@ make_effortdens_rt = function(data, Tri_Area = TriList$Tri_Area) {
 
   df4 = df3
 
-  df5 = data.frame("r_i" = c(1:length(TriList$Tri_Area)),
-                   "Tri_Area" = TriList$Tri_Area)
+  df5 = data.frame("r_i" = c(1:length(Tri_Area)),
+                   "Tri_Area" = Tri_Area)
 
   for (col in names(df4)) {
     df4[, col] <- df4[, col] / df5[match(rownames(df4), df5$r_i), "Tri_Area"]
