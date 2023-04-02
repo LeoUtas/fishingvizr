@@ -172,7 +172,8 @@ make_polygons = function (data, n_loop) {
 make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
                           legend_title = "Effort",
                           plot_title = "Title",
-                          texture
+                          texture,
+                          pooled_scale = FALSE
                           ) {
 
   data = data # data are TriList$V0, TriList$V2, TriList$V2
@@ -189,12 +190,11 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
 
   # arrange inputs for the loop creating triangle plots
   {
-    limits = range(effortdens_rt)
-    breaks = pretty(c(0,max(effortdens_rt)), n = n_breaks)
     poly_sf_ls <- list()
     filtered_poly_sf_ls = list()
     Tri_plot_ls = list()
     Output_ls = list()
+    pooled_scale = pooled_scale
 
     # run to select a mapping region
     selected_map_region = subset(shp_source, F_CODE %in% selected_region)
@@ -211,13 +211,28 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
     # filter the sf object to use the data within the selected map only
     filtered_poly_sf_ls[[i]] = suppressWarnings(st_intersection(poly_sf_ls[[i]], selected_map_region))
 
+    # prepare for the choice of legend scale
+    limits1 = range(effortdens_rt)
+    breaks1 = pretty(c(0,max(effortdens_rt)), n = n_breaks)
+
+    limits2 = range(effortdens_rt[,i])
+    breaks2 = pretty(c(0,max(effortdens_rt[,i])), n = n_breaks)
+
+    if (pooled_scale == TRUE) {
+      limits = limits1
+      breaks = breaks1
+    } else {
+       limits = limits2
+       breaks = breaks2
+    }
+
     # plot the triangles of efforts
     Tri_plot_ls[[i]] = ggplot() +
 
       geom_sf(data = (filtered_poly_sf_ls[[i]]),
               alpha = .8,
               aes(fill=effort),
-              color = "white") +
+              color = "transparent") +
 
       scale_fill_gradientn(colors = texture,
                            limits = limits,
