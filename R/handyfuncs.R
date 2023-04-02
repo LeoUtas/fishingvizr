@@ -1,7 +1,7 @@
 # ---------- SOME HANDY FUNCTIONS FOR MY PHD WORK ----------- #
 
 
-# ---------- FUNCTION 1 ----------- #
+# ---------- FUNCTION get_backto_WD() ----------- #
 # this chunk of codes works the same way the "Session => Set Working Directory => To Source File Location" does
 get_backto_WD = function() {
   {
@@ -19,7 +19,7 @@ get_backto_WD = function() {
 }
 
 
-# ---------- FUNCTION 2 ----------- #
+# ---------- FUNCTION test_repetitive_locs() ----------- #
 # This chunk of codes is to check if there is any repetitive locations (i.e., same lat and long)
 test_repetitive_locs = function(data) {
 
@@ -41,7 +41,7 @@ test_repetitive_locs = function(data) {
 }
 
 
-# ---------- FUNCTION 3 ----------- #
+# ---------- FUNCTION make_effortdens_rt() ----------- #
 # to make effortdens_rt matrix
 make_effortdens_rt = function(data, Tri_Area) {
 
@@ -89,7 +89,7 @@ make_effortdens_rt = function(data, Tri_Area) {
 }
 
 
-# ---------- FUNCTION 4 ----------- #
+# ---------- FUNCTION fit_the_model() ----------- #
 # to fit the model
 fit_the_model = function(tmb_data, tmb_pars) {
 
@@ -137,9 +137,40 @@ fit_the_model = function(tmb_data, tmb_pars) {
 }
 
 
-# ---------- FUNCTION 5 ----------- #
+# ---------- FUNCTION make_landmark() ----------- #
+make_landmark = function (coords, name = NULL, crs = 4326) {
+
+  lat = coords[1]
+  long = coords[2]
+  crs = crs
+  name = name
+
+  # Create a data frame with A1
+  point0 <- data.frame(lat = lat, long = long)
+  # Convert the data frame to an sf point object with WGS84 CRS
+  point0_sf <- st_as_sf(point0, coords = c("long", "lat"), crs = crs)
+  # Create a buffer of 500 meters (1 km diameter) around point0
+  point1_sf <- st_buffer(point0_sf, dist = 500)
+  # Extract the coordinates of the polygon vertices
+  point1_coords <- st_coordinates(point1_sf)
+  # Create a data frame with the polygon vertices
+  point1_df <- data.frame(long = point1_coords[,1], lat = point1_coords[,2])
+  # Add the first vertex at the end to close the polygon
+  point1_df <- rbind(point1_df, point1_df[1,])
+  # Create an sf polygon object with name attribute
+  point1_sf <- st_polygon(list(as.matrix(point1_df)))
+  # Create a sf object
+  point1_sf = st_sf(geometry = st_sfc(point1_sf), crs = crs)
+  # add a name attribute to the sf object
+  point1_sf$name = stringr::str_to_title(name)
+
+  return(point1_sf)
+}
+
+
+# ---------- FUNCTION make_polygon() ----------- #
 # create a list of polygons
-make_polygons = function (data, n_loop) {
+make_polygon = function (data, n_loop, crs = 4326) {
 
   n_loop = n_loop # n_loop = the number of triangles
   V_ls = data # data are TriList$V0, TriList$V2, TriList$V2
@@ -160,16 +191,40 @@ make_polygons = function (data, n_loop) {
 
     poly_ls[[i]] <- st_polygon(list(mat_ls[[i]]))
   }
-  crs <- st_crs("+proj=longlat +datum=WGS84")
+  crs = crs
   poly_sf <- st_sf(geometry = st_sfc(poly_ls), crs = crs)
+  poly_sf$name = "triangle"
 
   return(poly_sf)
 
 }
 
 
-# ---------- FUNCTION 6 ----------- #
-make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
+# --------------------- FUNCTION make_tri_mesh() - APPLY THORSON'S CODE FOR SURVEY DATA --------------------- #
+make_tri_mesh = function (convex, cutoff, lok_center, data) {
+
+  convex = convex
+  cutoff = cutoff
+  lok_center = lok_center
+  data = data # take survey data as input
+
+  loc = cbind(data$long, data$lat)
+  loc_k <- stats::kmeans(loc, centers = lok_center)$centers
+  MeshList <- MovementTools::Make_Movement_Mesh(loc_orig = loc_k, Cutoff = cutoff)
+  TriList <- MovementTools::TriList_Fn(mesh = MeshList$mesh_domain)
+  r_i <- MovementTools::Loc2Tri_Fn(locmat=loc, TriList=TriList)
+  # add the r_i to the data df
+  data$r_i = r_i
+
+  output = list(data, TriList)
+
+  return(output)
+
+}
+
+
+# ---------- FUNCTION make_tri_map() ----------- #
+make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, landmark = NULL,
                           legend_title = "Effort",
                           plot_title = "Title",
                           texture,
@@ -180,6 +235,18 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
   n_loop = n_loop # n_loop = the number of triangles
 
   poly_sf = make_polygons(data = data, n_loop = n_loop)
+
+  # option to add landmark points
+  landmark = landmark
+  if (!is.null(landmark)) {
+
+    landmark = landmark
+    poly_sf$name = "triangle"
+    poly_sf = rbind(poly_sf, landmark)
+    effort_data = rbind(effort_data, matrix(1, nrow = nrow(landmark), ncol = ncol(effort_data)))
+  } else {
+     poly_sf = poly_sf
+  }
 
   effortdens_rt = effort_data # take in the effort data in a matrix form
   n_breaks = n_breaks # the number of breaks for legend scale
@@ -198,6 +265,7 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
 
     # run to select a mapping region
     selected_map_region = subset(shp_source, F_CODE %in% selected_region)
+    selected_map_region = selected_map_region %>% select(-c(F_SUBDIVIS,F_SUBUNIT))
   }
 
   # Loop to create each poly_sf object, append it to the list, and generate triangle plots
@@ -207,7 +275,8 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
     # add the effort attribute to the sf object for year i
     poly_sf_ls[[i]]$effort = effortdens_rt[,i]
     # add the year attribute to the sf object for year i
-    poly_sf_ls[[i]]$year = rep(colnames(effortdens_rt[,i]), length(effortdens_rt[,i])) 
+    poly_sf_ls[[i]]$year = rep(colnames(effortdens_rt)[i], length(effortdens_rt[,i])) 
+    st_make_valid(poly_sf_ls[[1]])
     # filter the sf object to use the data within the selected map only
     filtered_poly_sf_ls[[i]] = suppressWarnings(st_intersection(poly_sf_ls[[i]], selected_map_region))
 
@@ -266,30 +335,7 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
 }
 
 
-# --------------------- FUNCTION 7 - APPLY THORSON'S CODE FOR SURVEY DATA --------------------- #
-make_tri_mesh = function (convex, cutoff, lok_center, data) {
-
-  convex = convex
-  cutoff = cutoff
-  lok_center = lok_center
-  data = data # take survey data as input
-
-  loc = cbind(data$long, data$lat)
-  loc_k <- stats::kmeans(loc, centers = lok_center)$centers
-  MeshList <- MovementTools::Make_Movement_Mesh(loc_orig = loc_k, Cutoff = cutoff)
-  TriList <- MovementTools::TriList_Fn(mesh = MeshList$mesh_domain)
-  r_i <- MovementTools::Loc2Tri_Fn(locmat=loc, TriList=TriList)
-  # add the r_i to the data df
-  data$r_i = r_i
-
-  output = list(data, TriList)
-
-  return(output)
-
-}
-
-
-# --------------------- FUNCTION 8 - APPLY THORSON'S CODE FOR EFFORT DATA --------------------- #
+# --------------------- FUNCTION make_effort_r_i() - APPLY THORSON'S CODE FOR EFFORT DATA --------------------- #
 make_effort_r_i = function (data, TriList) {
 
   data = data

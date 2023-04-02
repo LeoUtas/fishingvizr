@@ -53,4 +53,7 @@ importFrom(INLA,
 importFrom(stats,
            "kmeans",
            "complete.cases")
+importFrom(stringr,
+           "str_to_title")
+
 
