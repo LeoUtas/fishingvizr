@@ -234,7 +234,7 @@ make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, l
   data = data # data are TriList$V0, TriList$V2, TriList$V2
   n_loop = n_loop # n_loop = the number of triangles
 
-  poly_sf = make_polygons(data = data, n_loop = n_loop)
+  poly_sf = make_polygon(data = data, n_loop = n_loop)
 
   # option to add landmark points
   landmark = landmark
