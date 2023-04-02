@@ -206,6 +206,8 @@ make_tri_maps = function (data, n_loop, effort_data, n_breaks, selected_region,
     poly_sf_ls[[i]] <- poly_sf # e.g., poly_sf_ls[[1]] = poly_sf_ls in the year 2012
     # add the effort attribute to the sf object for year i
     poly_sf_ls[[i]]$effort = effortdens_rt[,i]
+    # add the year attribute to the sf object for year i
+    poly_sf_ls[[i]]$year = rep(colnames(effortdens_rt[,i]), length(effortdens_rt[,i])) 
     # filter the sf object to use the data within the selected map only
     filtered_poly_sf_ls[[i]] = suppressWarnings(st_intersection(poly_sf_ls[[i]], selected_map_region))
 
