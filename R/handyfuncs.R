@@ -379,7 +379,7 @@ render_3dplot = function (range, Tri_plot_ls2,
                           lightintensity = c(600, 100),
                           samples = 550,
                           width = 6000, height = 6000,
-                          path = "viz/3D/", folder_name
+                          path = "viz/3D/", folder_name,
                           gear_type
                           ) {
 
