@@ -1,7 +1,7 @@
-# ---------- SOME HANDY FUNCTIONS FOR MY PHD WORK ----------- #
+# --------------------- SOME HANDY FUNCTIONS --------------------- #
 
 
-# ---------- FUNCTION get_backto_WD() ----------- #
+# --------------------- FUNCTION get_backto_WD() --------------------- #
 # this chunk of codes works the same way the "Session => Set Working Directory => To Source File Location" does
 get_backto_WD = function() {
   {
@@ -19,7 +19,24 @@ get_backto_WD = function() {
 }
 
 
-# ---------- FUNCTION test_repetitive_locs() ----------- #
+check_path = function(path, folder_name) {
+
+  path = path
+  folder_name = folder_name
+
+  # Check if the gear_type folder already exists
+  if (!dir.exists(file.path(path, folder_name))) {
+    # Create the 3D folder if it doesn't exist
+    dir.create(file.path(path, folder_name))
+    cat(crayon::cyan(paste("created ", folder_name, " folder ", " in ", path, "\n", sep = "")))
+    
+  } else {
+    cat(crayon::cyan(paste(folder_name, " folder already exists ", " in ", path, "\n", sep = "")))
+  }
+}
+
+
+# --------------------- FUNCTION test_repetitive_locs() --------------------- #
 # This chunk of codes is to check if there is any repetitive locations (i.e., same lat and long)
 test_repetitive_locs = function(data) {
 
@@ -41,7 +58,7 @@ test_repetitive_locs = function(data) {
 }
 
 
-# ---------- FUNCTION make_effortdens_rt() ----------- #
+# --------------------- FUNCTION make_effortdens_rt() --------------------- #
 # to make effortdens_rt matrix
 make_effortdens_rt = function(data, Tri_Area) {
 
@@ -89,7 +106,7 @@ make_effortdens_rt = function(data, Tri_Area) {
 }
 
 
-# ---------- FUNCTION fit_the_model() ----------- #
+# --------------------- FUNCTION fit_the_model() --------------------- #
 # to fit the model
 fit_the_model = function(tmb_data, tmb_pars) {
 
@@ -137,38 +154,29 @@ fit_the_model = function(tmb_data, tmb_pars) {
 }
 
 
-# ---------- FUNCTION make_landmark() ----------- #
-make_landmark = function (coords, name = NULL, crs = 4326) {
+# --------------------- FUNCTION make_sumdata() --------------------- #
+make_sumdata = function (data) {
 
-  lat = coords[1]
-  long = coords[2]
-  crs = crs
-  name = name
+  # get the data ready to use
+  {
+    data = data %>% arrange(year, lat, long)
+    sumdata = data %>% group_by(positionStr, year) %>%
+      summarise(
+        N = n(),
+        effort = sum(effort),
+        .groups = "drop" 
+      )
+    
+    sumdata$lat <- sapply(strsplit(sumdata$positionStr, "-"), function(x) as.numeric(x[1]))
+    sumdata$long <- sapply(strsplit(sumdata$positionStr, "-"), function(x) (as.numeric(x[2])*-1))
+    sumdata = as.data.frame(sumdata %>% dplyr::select(-positionStr) %>% arrange(year, lat, long))
+  }
+  return(sumdata)
 
-  # Create a data frame with A1
-  point0 <- data.frame(lat = lat, long = long)
-  # Convert the data frame to an sf point object with WGS84 CRS
-  point0_sf <- st_as_sf(point0, coords = c("long", "lat"), crs = crs)
-  # Create a buffer of 500 meters (1 km diameter) around point0
-  point1_sf <- st_buffer(point0_sf, dist = 500)
-  # Extract the coordinates of the polygon vertices
-  point1_coords <- st_coordinates(point1_sf)
-  # Create a data frame with the polygon vertices
-  point1_df <- data.frame(long = point1_coords[,1], lat = point1_coords[,2])
-  # Add the first vertex at the end to close the polygon
-  point1_df <- rbind(point1_df, point1_df[1,])
-  # Create an sf polygon object with name attribute
-  point1_sf <- st_polygon(list(as.matrix(point1_df)))
-  # Create a sf object
-  point1_sf = st_sf(geometry = st_sfc(point1_sf), crs = crs)
-  # add a name attribute to the sf object
-  point1_sf$name = stringr::str_to_title(name)
-
-  return(point1_sf)
 }
 
 
-# ---------- FUNCTION make_polygon() ----------- #
+# --------------------- FUNCTION make_polygon() --------------------- #
 # create a list of polygons
 make_polygon = function (data, n_loop, crs = 4326) {
 
@@ -200,13 +208,13 @@ make_polygon = function (data, n_loop, crs = 4326) {
 }
 
 
-# --------------------- FUNCTION make_tri_mesh() - APPLY THORSON'S CODE FOR SURVEY DATA --------------------- #
+# --------------------- FUNCTION make_tri_mesh() - APPLY THORSON'S CODE --------------------- #
 make_tri_mesh = function (convex, cutoff, lok_center, data) {
 
   convex = convex
   cutoff = cutoff
   lok_center = lok_center
-  data = data # take survey data as input
+  data = data # take survey data as input (recommended for research)
 
   loc = cbind(data$long, data$lat)
   loc_k <- stats::kmeans(loc, centers = lok_center)$centers
@@ -223,30 +231,58 @@ make_tri_mesh = function (convex, cutoff, lok_center, data) {
 }
 
 
+# --------------------- FUNCTION make_effort_r_i() - APPLY THORSON'S CODE --------------------- #
+make_effort_r_i = function (data, TriList) {
+
+  data = data
+  TriList = TriList
+
+  loc = cbind(data$long, data$lat)
+  error_count = 0
+  tri_found = rep(NA,dim(loc)[1])
+
+  { # WARNING: VERY LONG TIME RUN
+    start_time = Sys.time()
+    for (i in 1:dim(loc)[1]) {
+      loc_i = loc[i,]
+      loc_i = matrix(loc_i, nrow = 1, ncol = 2)
+      error_r = try((loc_found_i = MovementTools::Loc2Tri_Fn(locmat=loc_i, TriList=TriList)),
+                    silent=TRUE)
+
+      if ('try-error' %in% class(error_r)) {
+        error_count = error_count + 1
+        next
+      }
+      tri_found[i] = loc_found_i
+    }
+    end_time = Sys.time()
+  }
+
+  r_i = tri_found
+  # add the r_i to the data df
+  data$r_i = r_i
+  # remove the rows containing NA r_i
+  updated_data = data[complete.cases(data),]
+  output = list(updated_data, error_count)
+
+  return(output)
+
+}
+
+
 # ---------- FUNCTION make_tri_map() ----------- #
-make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, landmark = NULL,
-                          legend_title = "Effort",
-                          plot_title = "Title",
-                          texture,
-                          pooled_scale = FALSE
-                          ) {
+make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region,
+                         legend_title = "Effort",
+                         plot_title = "Title",
+                         texture,
+                         pooled_scale = FALSE
+                         ) {
 
   data = data # data are TriList$V0, TriList$V2, TriList$V2
   n_loop = n_loop # n_loop = the number of triangles
 
-  poly_sf = make_polygon(data = data, n_loop = n_loop)
-
-  # option to add landmark points
-  landmark = landmark
-  if (!is.null(landmark)) {
-
-    landmark = landmark
-    poly_sf$name = "triangle"
-    poly_sf = rbind(poly_sf, landmark)
-    effort_data = rbind(effort_data, matrix(1, nrow = nrow(landmark), ncol = ncol(effort_data)))
-  } else {
-     poly_sf = poly_sf
-  }
+  # create polygons to use in plotting
+  poly_sf = make_polygon(data = data, n_loop = n_loop)  
 
   effortdens_rt = effort_data # take in the effort data in a matrix form
   n_breaks = n_breaks # the number of breaks for legend scale
@@ -265,7 +301,7 @@ make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, l
 
     # run to select a mapping region
     selected_map_region = subset(shp_source, F_CODE %in% selected_region)
-    selected_map_region = selected_map_region %>% select(-c(F_SUBDIVIS,F_SUBUNIT))
+    selected_map_region = selected_map_region %>% dplyr::select(-c(F_SUBDIVIS,F_SUBUNIT))
   }
 
   # Loop to create each poly_sf object, append it to the list, and generate triangle plots
@@ -318,8 +354,8 @@ make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, l
             panel.border = element_rect(color = "darkgrey", fill = NA, linewidth = 1),
             #legend.position = c(0.2, 0.4)
 
-            legend.direction = "horizontal",
-            legend.position = "bottom",
+            legend.direction = "vertical",
+            legend.position = "right",
             legend.box = "horizontal",
             legend.margin = margin(t = 0, r = 0, b = 0, l = 0),
             legend.text.align = 0,
@@ -330,46 +366,102 @@ make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, l
     Output_ls[[i]] = list(filtered_poly_sf_ls[[i]], Tri_plot_ls[[i]])
   }
 
-  return(Output_ls)
+  return(Tri_plot_ls)
 
 }
 
 
-# --------------------- FUNCTION make_effort_r_i() - APPLY THORSON'S CODE FOR EFFORT DATA --------------------- #
-make_effort_r_i = function (data, TriList) {
+# --------------------- FUNCTION make_3dplot() APPLY rayshader package --------------------- #
+render_3dplot = function (range, Tri_plot_ls2, 
+                          lightcolor, 
+                          lightdirection = 315,
+                          lightaltitude = c(20, 80),
+                          lightintensity = c(600, 100),
+                          samples = 550,
+                          width = 6000, height = 6000,
+                          path = "viz/3D/", folder_name
+                          gear_type
+                          ) {
 
-  data = data
-  TriList = TriList
+  range = range
+  Tri_plot_ls2 = Tri_plot_ls2
+  lightcolor = lightcolor
+  lightdirection = lightdirection
+  lightaltitude = lightaltitude
+  lightintensity = lightintensity
+  samples = samples
+  width = width
+  height = height
+  folder_name = gear_type
 
-  loc = cbind(data$long, data$lat)
-  error_count = 0
-  tri_found = rep(NA,dim(loc)[1])
+  path = path
+  folder_name = folder_name  
+  
+  check_path(path = "viz", folder_name = "3D")
+  check_path(path = path, folder_name = folder_name)
 
-  { # WARNING: VERY LONG TIME RUN
-    start_time = Sys.time()
-    for (i in 1:dim(loc)[1]) {
-      loc_i = loc[i,]
-      loc_i = matrix(loc_i, nrow = 1, ncol = 2)
-      error_r = try((loc_found_i = MovementTools::Loc2Tri_Fn(locmat=loc_i, TriList=TriList)),
-                    silent=TRUE)
+  # Create plot2 for plot_gg()
+  plot2 = list()
+  for (i in 1:length(range)) {
+    plot2[[i]] = Tri_plot_ls2[[i]] +
+      
+      labs(title = NULL) +
+      theme(
+        axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none",
+        panel.border = element_blank()
+      )
+    
+    # Create a 3D plot
+    rgl::close3d()
+    plot_gg(
+      plot2[[i]],
+      solid = FALSE,
+      col = "transparent",
+      #sunangle = 315,
+      background = color[1],
+      multicore = TRUE,
+      theta = -45,
+      #zoom = 0.55, 
+      phi = 35
+      
+    )
+    render_snapshot()
 
-      if ('try-error' %in% class(error_r)) {
-        error_count = error_count + 1
-        next
+  # Render the high quality images
+    outfile <- paste(path, folder_name,"/3Dplot_", gear_type, "_", range[i],  "_.png", sep = "")
+
+    {
+      start_time <- Sys.time()
+      cat(crayon::cyan(start_time), "\n")
+      if (!file.exists(outfile)) {
+        png::writePNG(matrix(1), target = outfile)
       }
-      tri_found[i] = loc_found_i
+      
+      render_highquality(
+        filename = outfile,
+        
+        interactive = FALSE,
+        lightdirection = 315, #280 220
+        lightaltitude = lightaltitude,
+        lightcolor = c(lightcolor[2], "white"),
+        lightintensity = lightintensity,
+        samples = samples,
+        width = width,
+        height = height
+      )
+      end_time <- Sys.time()
+      diff <- end_time - start_time
+      cat(crayon::cyan(diff), "\n")
     }
-    end_time = Sys.time()
-  }
 
-  r_i = tri_found
-  # add the r_i to the data df
-  data$r_i = r_i
-  # remove the rows containing NA r_i
-  updated_data = data[complete.cases(data),]
-  output = list(updated_data, error_count)
+ }
+ rgl::close3d()
 
-  return(output)
+ cat(crayon::cyan(paste("3D plots were successfully rendered and saved to 3D folder", sep = "")))
 
 }
 
@@ -379,6 +471,115 @@ make_effort_r_i = function (data, TriList) {
 
 
 
+
+
+# # ---------- FUNCTION make_landmark() ----------- #
+# make_landmark_polygon = function (coords, name = NULL, crs = 4326, polygon = FALSE) {
+
+#   lat = coords[1]
+#   long = coords[2]
+#   crs = crs
+#   name = name
+
+#   if (polygon == FALSE) {
+
+#     point1_sf = st_point(x = coords)
+#     point1_sf = st_sf(geometry = st_sfc(point1_sf), crs = crs)
+#     point1_sf$name = stringr::str_to_title(name)
+
+#   } else {
+
+#   # Create a data frame with A1
+#   point0 <- data.frame(lat = lat, long = long)
+#   # Convert the data frame to an sf point object with WGS84 CRS
+#   point0_sf <- st_as_sf(point0, coords = c("long", "lat"), crs = crs)
+#   # Create a buffer of 500 meters (1 km diameter) around point0
+#   point1_sf <- st_buffer(point0_sf, dist = 500)
+#   # Extract the coordinates of the polygon vertices
+#   point1_coords <- st_coordinates(point1_sf)
+#   # Create a data frame with the polygon vertices
+#   point1_df <- data.frame(long = point1_coords[,1], lat = point1_coords[,2])
+#   # Add the first vertex at the end to close the polygon
+#   point1_df <- rbind(point1_df, point1_df[1,])
+#   # Create an sf polygon object with name attribute
+#   point1_sf <- st_polygon(list(as.matrix(point1_df)))
+#   # Create a sf object
+#   point1_sf = st_sf(geometry = st_sfc(point1_sf), crs = crs)
+#   # add a name attribute to the sf object
+#   point1_sf$name = stringr::str_to_title(name)
+
+#   }
+
+#   return(point1_sf)
+# }
+
+
+# # --------------------- FUNCTION make_2dplot() --------------------- #
+# render_2dplot = function (landmark = NULL,
+#                           landmark_text_size = 9,
+#                           text_color,
+#                           width, height, 
+#                           range,
+#                           Tri_plot_ls) {
+
+#   # Create plot1 as side plot of the visualization
+#   {
+#     plot1 = list()
+#     plot1.1 = list()
+#     legend = list()
+#     text_color = text_color
+#     width = width 
+#     height = height
+#     range = range
+#   }
+
+#   # Check if the 2D folder already exists
+#   if (!dir.exists(file.path("viz", "2D"))) {
+#     # Create the 2D folder if it doesn't exist
+#     dir.create(file.path("viz", "2D"))
+#     cat(crayon::cyan(paste("created 2D folder \n", sep = "")))
+    
+#   } else {
+#     cat(crayon::cyan(paste("2D folder already exists \n", sep = "")))
+#   }
+
+#   {
+#     Tri_plot_ls = Tri_plot_ls
+#     landmark_text_size = landmark_text_size
+#     landmark = landmark      
+#   }  
+
+#   for (i in 1:length(range)) {
+    
+#     plot1[[i]] = Tri_plot_ls[[i]] + 
+      
+#       geom_point(data = landmark, aes(x = lat,
+#                                       y = long),
+#                 size = 1.5,
+#                 color = text_color
+#                 ) +
+      
+#       geom_text(data = landmark, aes(x = lat, 
+#                                     y = long, 
+#                                     label = name),
+#                 size = landmark_text_size,
+#                 color = text_color,
+#                 nudge_x = 0.01, 
+#                 nudge_y = .28) +
+      
+#       labs(title = NULL)
+    
+#     ggsave(paste("viz/2D/", folder_name, "/2Dplot_", gear_type, "_", range[i], "_.png", sep = ""), 
+#           plot = plot1[[i]], 
+#           width = width, 
+#           height = height, 
+#           dpi = 300,
+#           bg = "white")
+#   }
+
+#   return(plot1)
+
+# }
 
 
 # ------------------ TEST CODE FOR EFFORTDENS_RT ------------------ #

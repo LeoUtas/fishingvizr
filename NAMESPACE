@@ -12,7 +12,9 @@ importFrom(dplyr,
            "group_by",
            "reframe",
            "n",
-           "select")
+           "select",
+           "arrange",
+           "summarise")
 importFrom(gfwr, "get_raster")
 importFrom(jsonlite, "toJSON")
 importFrom(magrittr,"%>%")
@@ -37,7 +39,9 @@ importFrom(ggplot2,
            )
 #importFrom(tigris)
 #importFrom(tidyverse)
-#importFrom(stars)
+importFrom(stars,
+           "st_rasterize"
+           )
 #importFrom(raster)
 #importFrom(rayshader)
 importFrom(colorspace,
