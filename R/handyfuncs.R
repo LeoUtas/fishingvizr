@@ -36,6 +36,21 @@ check_path = function(path, folder_name) {
 }
 
 
+# --------------------- FUNCTION handle_dimensions() --------------------- #
+# handle width and height when using ggsave()
+handle_dimensions = function(plot) {
+  
+  plot = plot
+  g <- ggplot_build(plot = plot)
+  x_range = abs(g$layout$panel_params[[1]]$x_range[2] - g$layout$panel_params[[1]]$x_range[1])
+  y_range = abs(g$layout$panel_params[[1]]$y_range[2] - g$layout$panel_params[[1]]$y_range[1])
+  ratio = y_range / x_range
+  width = height * ratio
+  
+  return(ratio)
+  
+}
+
 # --------------------- FUNCTION test_repetitive_locs() --------------------- #
 # This chunk of codes is to check if there is any repetitive locations (i.e., same lat and long)
 test_repetitive_locs = function(data) {
