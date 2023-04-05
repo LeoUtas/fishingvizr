@@ -271,7 +271,7 @@ make_effort_r_i = function (data, TriList) {
 
 
 # ---------- FUNCTION make_tri_map() ----------- #
-make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region,
+make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, gear_type,
                          legend_title = "Effort",
                          plot_title = "Title",
                          texture,
@@ -345,8 +345,10 @@ make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region,
 
       labs(fill = paste(legend_title, "\n")) +
 
-      ggtitle(paste(plot_title,
-                    colnames(effortdens_rt)[i], sep = " ")) +
+      ggtitle(paste(plot_title, " ",
+                    colnames(effortdens_rt)[i],
+                    " | Gear type: ", gear_type,
+                     sep = " ")) +
 
       theme(panel.grid = element_blank(),
             plot.background = element_rect(fill = "white"),
