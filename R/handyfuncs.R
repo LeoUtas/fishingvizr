@@ -233,6 +233,10 @@ make_tri_mesh = function (convex, cutoff, lok_center, data) {
 
   loc = cbind(data$long, data$lat)
 
+  if (lok_center > length(data$long) | lok_center == length(data$long)) {
+    lok_center = length(data$long) - 1
+  }
+
   # this chunk to force kmeans running until there is no warning
   test <- TRUE
   while(test == TRUE) {
