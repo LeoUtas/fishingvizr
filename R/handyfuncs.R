@@ -45,7 +45,7 @@ handle_dimensions = function(plot) {
   x_range = abs(g$layout$panel_params[[1]]$x_range[2] - g$layout$panel_params[[1]]$x_range[1])
   y_range = abs(g$layout$panel_params[[1]]$y_range[2] - g$layout$panel_params[[1]]$y_range[1])
   ratio = y_range / x_range
-  width = height * ratio
+  # width = height * ratio
   
   return(ratio)
   
