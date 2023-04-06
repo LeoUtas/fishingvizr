@@ -232,9 +232,28 @@ make_tri_mesh = function (convex, cutoff, lok_center, data) {
   data = data # take survey data as input (recommended for research)
 
   loc = cbind(data$long, data$lat)
-  loc_k <- stats::kmeans(loc, centers = lok_center)$centers
+
+  # this chunk to force kmeans running until there is no warning
+  test <- TRUE
+  while(test == TRUE) {
+    loc_k <- tryCatch(
+      stats::kmeans(loc, centers = lok_center)$centers,
+      warning = function(w) {
+        # print("Warning is True")
+        return(TRUE)
+      }
+    )
+  
+    if(is.logical(loc_k)) {
+      test <- loc_k
+    } else {
+      test <- FALSE
+    }
+  }
+  
   MeshList <- MovementTools::Make_Movement_Mesh(loc_orig = loc_k, Cutoff = cutoff)
   TriList <- MovementTools::TriList_Fn(mesh = MeshList$mesh_domain)
+  n_r = length(TriList$Tri_Area)
   r_i <- MovementTools::Loc2Tri_Fn(locmat=loc, TriList=TriList)
   # add the r_i to the data df
   data$r_i = r_i
