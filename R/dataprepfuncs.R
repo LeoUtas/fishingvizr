@@ -7,7 +7,7 @@
 #' @importFrom jsonlite toJSON
 #' @importFrom magrittr %>%
 
-devtools::install_github("GlobalFishingWatch/gfwr", force = TRUE)
+# devtools::install_github("GlobalFishingWatch/gfwr", force = TRUE)
 #install.packages("MetBrewer")
 #install.packages("colorspace")
 
