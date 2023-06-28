@@ -315,7 +315,7 @@ make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, g
                          legend_title = "Effort",
                          plot_title = "Title",
                          texture,
-                         pooled_scale = FALSE,
+                         pooled_scale = FALSE
                          
                          ) {
 
