@@ -5,7 +5,7 @@
 #' @importFrom ggplot2 ggplot geom_sf
 
 
-# ---------- DATA VISUALIZATION FUNCTION 1 ----------- #
+# ------------ make_map_background() ----------- #
 #' Creates a map background
 #'#'
 #' @param selected_map_region is required to provide selected regions for the map background.
@@ -77,7 +77,7 @@ make_map_background = function(selected_map_region,
 }
 
 
-# ---------- DATA VISUALIZATION FUNCTION 2 ----------- #
+# ------------ make_bubmap() ----------- #
 #' This is a main function to create a list of bubble maps for fishing effort
 #' data requested from the Global Fishing Watch API
 #'
@@ -125,14 +125,14 @@ make_map_background = function(selected_map_region,
 #'
 #'
 make_bubmap = function(data, selected_map_region, begin, end,
-                       alpha = .3,
+                       alpha = .6,
                        over_zero_color = "#002E94",
                        over_zero_fill = "#002E94",
                        zero_color = "#1A1A40",
                        zero_fill = "#1A1A40",
-                       legend_title,
+                       legend_title = "effort",
                        plot_tilte = "Fishing effort map",
-                       zeronote = "Weight = 0") {
+                       zeronote = "N = 0") {
 
   bubmap_temp = make_map_background(selected_map_region = selected_map_region)
 
@@ -150,9 +150,9 @@ make_bubmap = function(data, selected_map_region, begin, end,
                  alpha = alpha, color = over_zero_color, fill = over_zero_fill) +
 
       geom_point(data = data[[i]][data[[i]]$effort == 0,],
-                 aes(x = long, y = lat, shape = ifelse(effort == 0, zeronote, "over_zero")) ,
+                 aes(x = long, y = lat, shape = ifelse(.data$effort == 0, !!zeronote, "over_zero")) ,
                  color = zero_color, fill = zero_fill) +
-      scale_shape_manual(name="",values=c("Weight = 0"=4,"over_zero"=21),limits=c(zeronote)) +
+      scale_shape_manual(name="", values=setNames(c(4, 21), c(zeronote, "over_zero")), limits=c(zeronote)) +
 
       scale_size_continuous(paste(legend_title)) +
 
@@ -164,7 +164,7 @@ make_bubmap = function(data, selected_map_region, begin, end,
 }
 
 
-# ---------- DATA VISUALIZATION FUNCTION 3 ----------- #
+# ------------ print_map() ----------- #
 #' Creates a series of .jpg files for the list of fishing effort maps
 #'
 #' @param effort_map takes the output of the function make_bubmap()

@@ -16,7 +16,7 @@ shp_source = read_sf("inst/extdata/shp/FAO_AREAS_CWP.shp")
 available_regions = sort(unique(shp_source$F_CODE))
 
 
-# ---------- DATA PREPARATION FUNCTION 1 ----------- #
+# ---------- make_selected_region() ----------- #
 #' Creates selected fishing regions
 #'
 #' @param region
@@ -49,7 +49,7 @@ make_selected_region = function(region) {
 }
 
 
-# ---------- DATA PREPARATION FUNCTION 2 ----------- #
+# ---------- make_region_json() ----------- #
 #' Extracts the coordinates information and turn them into json data
 #' to use in the function get_raster()
 #'
@@ -86,7 +86,7 @@ make_region_json = function(selected_region) {
 }
 
 
-# ---------- DATA PREPARATION FUNCTION 3 ----------- #
+# ---------- make_year_range() ----------- #
 #' Creates begin and end year objects from the provided date information
 #' that is required in the function get_rasters()
 #'
@@ -116,7 +116,7 @@ make_year_range = function(begin,end) {
 }
 
 
-# ---------- DATA PREPARATION FUNCTION 4 ----------- #
+# ----------- get_rasters() ----------- #
 #' This is a main function to request fishing effort data from the Global Fishing Watch API
 #' and turn the data into a dataframe containing the information of
 #' vessel name, year, month, day, fishing effort, latitude, longitude, gear type and vessel flag
@@ -240,7 +240,7 @@ get_rasters = function(spatial_resolution = "high", # low (0.1 degree) or high (
 }
 
 
-# ---------- DATA PREPARATION FUNCTION 5 ----------- #
+# ------------ make_annual_ls() ----------- #
 #' This function takes the output of the function get_rasters() to create
 #' a list of fishing effort data for different years that is helpful for
 #' data visualization when using the function make_bubmap() in this package

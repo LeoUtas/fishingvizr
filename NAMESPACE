@@ -7,7 +7,8 @@ importFrom(sf,
            "st_crs",
            "st_sf",
            "st_polygon",
-           "st_sfc")
+           "st_sfc",
+           "st_make_valid")
 importFrom(dplyr,
            "group_by",
            "reframe",

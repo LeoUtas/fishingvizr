@@ -1,7 +1,7 @@
 # --------------------- SOME HANDY FUNCTIONS --------------------- #
 
 
-# --------------------- FUNCTION get_backto_WD() --------------------- #
+# --------------------- get_backto_WD() --------------------- #
 # this chunk of codes works the same way the "Session => Set Working Directory => To Source File Location" does
 get_backto_WD = function() {
   {
@@ -19,6 +19,7 @@ get_backto_WD = function() {
 }
 
 
+# --------------------- check_path() --------------------- #
 check_path = function(path, folder_name) {
 
   path = path
@@ -36,7 +37,7 @@ check_path = function(path, folder_name) {
 }
 
 
-# --------------------- FUNCTION handle_dimensions() --------------------- #
+# --------------------- handle_dimensions() --------------------- #
 # handle width and height when using ggsave()
 handle_dimensions = function(plot) {
   
@@ -51,7 +52,8 @@ handle_dimensions = function(plot) {
   
 }
 
-# --------------------- FUNCTION test_repetitive_locs() --------------------- #
+
+# --------------------- test_repetitive_locs() --------------------- #
 # This chunk of codes is to check if there is any repetitive locations (i.e., same lat and long)
 test_repetitive_locs = function(data) {
 
@@ -73,7 +75,7 @@ test_repetitive_locs = function(data) {
 }
 
 
-# --------------------- FUNCTION make_effortdens_rt() --------------------- #
+# --------------------- make_effortdens_rt() --------------------- #
 # to make effortdens_rt matrix
 make_effortdens_rt = function(data, Tri_Area) {
 
@@ -121,7 +123,7 @@ make_effortdens_rt = function(data, Tri_Area) {
 }
 
 
-# --------------------- FUNCTION fit_the_model() --------------------- #
+# --------------------- fit_the_model() --------------------- #
 # to fit the model
 fit_the_model = function(tmb_data, tmb_pars) {
 
@@ -169,7 +171,7 @@ fit_the_model = function(tmb_data, tmb_pars) {
 }
 
 
-# --------------------- FUNCTION make_sumdata() --------------------- #
+# --------------------- make_sumdata() --------------------- #
 make_sumdata = function (data) {
 
   # get the data ready to use
@@ -191,7 +193,7 @@ make_sumdata = function (data) {
 }
 
 
-# --------------------- FUNCTION make_polygon() --------------------- #
+# --------------------- make_polygon() --------------------- #
 # create a list of polygons
 make_polygon = function (data, n_loop, crs = 4326) {
 
@@ -223,7 +225,7 @@ make_polygon = function (data, n_loop, crs = 4326) {
 }
 
 
-# --------------------- FUNCTION make_tri_mesh() - APPLY THORSON'S CODE --------------------- #
+# --------------------- make_tri_mesh() - APPLY THORSON'S CODE --------------------- #
 make_tri_mesh = function (convex, cutoff, lok_center, data) {
 
   convex = convex
@@ -269,7 +271,7 @@ make_tri_mesh = function (convex, cutoff, lok_center, data) {
 }
 
 
-# --------------------- FUNCTION make_effort_r_i() - APPLY THORSON'S CODE --------------------- #
+# --------------------- make_effort_r_i() - APPLY THORSON'S CODE --------------------- #
 make_effort_r_i = function (data, TriList) {
 
   data = data
@@ -308,12 +310,13 @@ make_effort_r_i = function (data, TriList) {
 }
 
 
-# ---------- FUNCTION make_tri_map() ----------- #
+# ---------- make_tri_map() ----------- #
 make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, gear_type,
                          legend_title = "Effort",
                          plot_title = "Title",
                          texture,
-                         pooled_scale = FALSE
+                         pooled_scale = FALSE,
+                         
                          ) {
 
   data = data # data are TriList$V0, TriList$V2, TriList$V2
@@ -411,7 +414,7 @@ make_tri_map = function (data, n_loop, effort_data, n_breaks, selected_region, g
 }
 
 
-# --------------------- FUNCTION make_3dplot() APPLY rayshader package --------------------- #
+# --------------------- make_3dplot() APPLY rayshader package --------------------- #
 render_3dplot = function (range, Tri_plot_ls2, 
                           lightcolor, 
                           lightdirection = 315,
